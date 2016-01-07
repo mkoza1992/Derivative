@@ -1,11 +1,18 @@
+//A simple Java class that can calculate the derivative of a simple polynomial.
+
 public class Derivative {
 
+	// Parses the function string. Takes in a string with the function that you
+	// want the derivative of, and returns an array of integers that represents
+	// the coeffiecients of each degree
 	private static int[] parseFunc(String func) {
 		String newFunc = func.replace(" ", "");
 		boolean isPoly = true;
 		int high = 0;
 		int l = newFunc.length();
 
+		// check and make sure that there are no operands or symbols that would
+		// not be found in a polynomial
 		for (int i = 0; i < l; i++) {
 			char c = newFunc.charAt(i);
 			if (c == '/') {
@@ -64,7 +71,14 @@ public class Derivative {
 		return polyArray;
 	}
 
+	// Builds a string that gives you the derivative function. Takes in an
+	// integer array representing the coefficients of each degree in the
+	// function
 	private static String constructDerivative(int[] polyArray) {
+
+		if (polyArray == null)
+			return null;
+
 		int l = polyArray.length;
 		StringBuilder sb = new StringBuilder(l * 3);
 		for (int i = l - 1; i >= 0; i--) {
@@ -80,7 +94,7 @@ public class Derivative {
 						sb.append(polyArray[i] * (i + 1));
 					}
 				}
-				if(i>0)
+				if (i > 0)
 					sb.append("x");
 				if (polyArray[i] != 0 && i > 1) {
 					sb.append("^");
@@ -91,6 +105,10 @@ public class Derivative {
 		return (new String(sb));
 	}
 
+	// The public function. Takes in a string from the user representing a
+	// polynomial. Functions should be written in the form
+	// "Cx^n + Cx^n-1 - Cx^n-2...etc." Otherwise the
+	// the program won't parse the function correctly or at all.
 	public static String calculateDerivative(String func) {
 		return constructDerivative(parseFunc(func));
 	}
